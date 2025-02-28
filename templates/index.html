@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+  <title>Get-it</title>
+  <link rel="stylesheet" href="static/css/getit.css">
+</head>
+<body>
+  <script src="static/js/scripts.js"> </script>
+<div class="container"><img class="imagem_getit" src="{{ url_for('static', filename='img/logo-getit.png') }}"></div>
+<p>Como o Post-it, mas com outro verbo</p>
+
+<form action="/submit" method="POST">
+    <label for="titulo">Título</label>
+    <input id="titulo" type="text" name="titulo" />
+    <label for="detalhes">Detalhes</label>
+    <input id="detalhes" type="text" name="detalhes" />
+    <input type="submit" />
+  </form>
+<ul>
+{% for note in data %}
+<table>
+  <tr>
+    <td>
+      <li class="anotacoes" data-id="{{note.id}}">
+        <div class="note-title">{{note.titulo}}</div>
+            <div class="note-content">{{note.detalhes}}</div>
+            <form action="/delete/{{note.id}}" method="POST">
+              <button type="submit"><div class="delete-button">x</div></button>
+            </form>
+            <form action="/edit/{{note.id}}" method="POST">
+              <input type="hidden" id="titulo" name="titulo" value="{{note.titulo}}">
+              <input type="hidden" id="detalhes" name="detalhes" value="{{note.detalhes}}">
+              <button type="submit"><div class="edit-button">editar</div></button>
+            </form>
+      </li>
+    </td>
+  </tr>
+  {% endfor %}
+</table>
+</ul>
+</body>
+</html>
